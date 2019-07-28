@@ -79,7 +79,6 @@ class XMLParser implements StreamParserInterface
 					if ($alreadyExists) {
                         $elementCollection->put($foundElementName, $alreadyExists->push(new Collection($this->extractElement($foundElementName, true))));
                     } else {
-					    dump($foundElementName);
                         $elementCollection->put($foundElementName, new Collection([$this->extractElement($foundElementName, true)]));
                     }
 				}
