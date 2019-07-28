@@ -72,10 +72,16 @@ class XMLParser implements StreamParserInterface
 			if($this->isElement()) {
 				if($couldBeAnElementsList) {
 					$foundElementName = $this->reader->name;
-					$elementCollection->push(new Collection($this->extractElement($foundElementName, false, $this->reader->depth)));
+					$elementCollection->put($foundElementName, new Collection($this->extractElement($foundElementName)));
 				} else {
 					$foundElementName = $this->reader->name;
-					$elementCollection->put($foundElementName, $this->extractElement($foundElementName, true, $this->reader->depth));
+					$alreadyExists = $elementCollection->get($foundElementName);
+					if ($alreadyExists) {
+                        $elementCollection->put($foundElementName, $alreadyExists->push(new Collection($this->extractElement($foundElementName, true))));
+                    } else {
+					    dump($foundElementName);
+                        $elementCollection->put($foundElementName, new Collection([$this->extractElement($foundElementName, true)]));
+                    }
 				}
 			}
 		}
