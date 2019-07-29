@@ -59,6 +59,9 @@ class XMLParser implements StreamParserInterface
 		}
 
 		while($this->reader->read()) {
+			if ($this->reader->isEmptyElement) {
+                return $elementCollection;
+            }
 			if($this->isEndElement($elementName) && $this->reader->depth === $parentDepth) {
 				break;
 			}
